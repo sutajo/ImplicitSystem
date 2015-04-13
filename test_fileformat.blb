@@ -1,0 +1,26 @@
+# Evan Wilde
+# April 12 2015
+
+# Members of the primitive object:
+# iso: iso value
+# radius: maximum radius of the implicit object
+
+Primitive p; p.iso = 0.5; p.radius = 1;
+
+# Transforms
+t1 = p.translate(0, 3, 0); # Translate along the y axis by 3
+t2 = t1.rotate((0, 1, 0), 90); # Rotate around the y axis by 90 degrees
+t3 = t2.scale(0.25, 0, 0); # Skew t2 by 1/4 along the x axis
+
+# Operations
+# * : Blend
+# / : Intersect
+# + : Union
+# - : Difference -- Implement this after difference is implemented in tree
+#
+12i
+o1 = t1 * t3; # Blend t1 and t3
+o2 = o1 / t3; # Intersect o1 and t3
+o3 = o2 + t3; # Union o2 and t3
+
+set o3; # Make p3 be the root of the tree
