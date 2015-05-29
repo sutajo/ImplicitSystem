@@ -183,6 +183,15 @@ namespace Implicit
 		 */
 		Aabb GetBoundingBox();
 
+		/**
+		 * \brief Gets a list of pointers to this object, and any
+		 * sub-objects.
+		 *
+		 * This is used for converting the tree to a flat array for
+		 * faster evaluation times.
+		 */
+		virtual std::vector<Object*> GetObjects() const = 0;
+
 	protected:
 		/**
 		 * \brief gets good deltas for minimizing roundoff error

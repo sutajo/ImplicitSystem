@@ -63,3 +63,12 @@ glm::vec3 Transform::map_from(glm::vec3 v)
 {
 	return glm::vec3(m_from_local * glm::vec4(v, 1.f));
 }
+
+std::vector<Object*> Transform::GetObjects() const
+{
+	std::vector<Object*> ret_vec;
+	ret_vec.push_back((Object*)this);
+	std::vector<Object*> children = m_child->GetObjects();
+	ret_vec.insert(ret_vec.end(), children.begin(), children.end());
+	return ret_vec;
+}

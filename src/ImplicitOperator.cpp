@@ -33,3 +33,14 @@ glm::vec3 Operator::GetCenterVertex()
 {
 	return (m_left_child->GetCenterVertex()-m_right_child->GetCenterVertex())*0.5f;
 }
+
+std::vector<Object*> Operator::GetObjects() const
+{
+	std::vector<Object*> ret_vec;
+	ret_vec.push_back((Object*)this);
+	std::vector<Object*> left_children = m_left_child->GetObjects();
+	std::vector<Object*> right_children = m_right_child->GetObjects();
+	ret_vec.insert(ret_vec.end(), left_children.begin(), left_children.end());
+	ret_vec.insert(ret_vec.end(), right_children.begin(), right_children.end());
+	return ret_vec;
+}

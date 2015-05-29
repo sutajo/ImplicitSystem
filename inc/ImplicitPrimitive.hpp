@@ -118,6 +118,8 @@ namespace Implicit
 
 		virtual glm::vec3 Normal(const glm::vec3& point)=0;
 
+		virtual std::vector<Object*> GetObjects() const;
+
 	protected:
 
 		/**

@@ -41,6 +41,11 @@ namespace Implicit
 		virtual glm::vec3 Normal(const glm::vec3& point)=0;
 		virtual glm::vec3 GetStartVertex();
 		virtual glm::vec3 GetCenterVertex();
+		virtual std::vector<Object*> GetObjects() const;
+
+		inline const Object* LeftChild() const {return m_left_child;}
+		inline const Object* RightChild() const {return m_right_child;}
+
 	protected:
 		/**
 		 * \brief Left child object

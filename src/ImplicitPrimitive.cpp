@@ -42,3 +42,10 @@ float Primitive::Evaluate(float r)
 	return FieldValue(r) - m_iso;
 }
 
+std::vector<Object*> Primitive::GetObjects() const
+{
+	std::vector<Object*> ret_vec;
+	ret_vec.push_back((Object*)this);
+	return ret_vec;
+}
+
