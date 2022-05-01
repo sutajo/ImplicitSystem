@@ -176,7 +176,6 @@ glm::dmat3 Object::surfaceCurvature(const glm::dmat3& m)
 double Object::findRoot(const glm::dvec3& point, glm::dvec3 direction, double id)
 {
 	direction = glm::normalize(direction);
-	double ret_val;
 	double xi;
 	double xi1 = 0;
 	double xi2 = id;
@@ -193,7 +192,7 @@ double Object::findRoot(const glm::dvec3& point, glm::dvec3 direction, double id
 		xi = xi1 - fxi1 * ((xi1 - xi2)/(fxi1 - fxi2));
 		if (fxi1 == fxi2)
 		{
-			ret_val = xi1;
+			return xi1;
 #ifdef DEBUG
 			iteration = i;
 #endif
@@ -207,16 +206,16 @@ double Object::findRoot(const glm::dvec3& point, glm::dvec3 direction, double id
 #ifdef DEBUG
 			iteration = i;
 #endif
-			ret_val = xi1;
+			return xi1;
 			break;
 		}
 	}
-	/*
+	
 #ifdef DEBUG
-	std::cout << iteration << " iterations ";
+	std::cerr << "Failed to find root";
 #endif
-	*/
-	return ret_val;
+	
+	return xi1;
 }
 
 glm::dvec3 Implicit::Object::findRootBetween(glm::dvec3 innerPoint, glm::dvec3 outerPoint, int maxiterations)
