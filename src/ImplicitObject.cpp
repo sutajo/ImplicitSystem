@@ -295,7 +295,7 @@ glm::dvec3 Object::project(const glm::dvec3& pt)
 {
 	// the point + some distance along the gradient
 	// Gives us the point on the surface
-	auto sign = signbit(Evaluate(pt)) ? -1.0f : 1.0f;
+	auto sign = std::signbit(Evaluate(pt)) ? -1.0f : 1.0f;
 	auto n = Normal(pt);
 	n *= sign;
 	return pt + (n * findRoot(pt, n));
