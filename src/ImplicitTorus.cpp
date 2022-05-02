@@ -62,12 +62,12 @@ double Torus::getDistance(const glm::dvec3& point)
 void Torus::compute_bounds()
 {
 	std::list<glm::dvec3> points;
-	points.push_back(glm::dvec3(m_center_radius + m_cross_radius, 0, 0));
-	points.push_back(glm::dvec3(-(m_center_radius + m_cross_radius), 0, 0));
-	points.push_back(glm::dvec3(0, m_center_radius + m_cross_radius, 0));
-	points.push_back(glm::dvec3(0, -(m_center_radius + m_cross_radius), 0));
-	points.push_back(glm::dvec3(0, 0, m_cross_radius));
-	points.push_back(glm::dvec3(0, 0, -m_cross_radius));
+	points.push_back(glm::dvec3(m_center_radius*1.5 + m_cross_radius, 0, 0));
+	points.push_back(glm::dvec3(-(m_center_radius*1.5 + m_cross_radius), 0, 0));
+	points.push_back(glm::dvec3(0, m_center_radius*1.5 + m_cross_radius, 0));
+	points.push_back(glm::dvec3(0, -(m_center_radius*1.5 + m_cross_radius), 0));
+	points.push_back(glm::dvec3(0, 0, m_cross_radius*3));
+	points.push_back(glm::dvec3(0, 0, -m_cross_radius*3));
 	m_bounds.compute(points);
 }
 
