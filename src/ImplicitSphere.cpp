@@ -1,38 +1,39 @@
 #include "ImplicitSphere.hpp"
 
 using namespace Implicit;
+using namespace autodiff;
 
-Sphere::Sphere(FieldFunction f) :
-	Primitive(f)
+Sphere::Sphere()
 {
+	SetEquation();
 	compute_bounds();
 }
 
-Sphere::Sphere(FieldFunction f, double iso) :
-	Primitive(f, iso)
+Sphere::Sphere(double iso)
 {
+	SetEquation();
 	compute_bounds();
 }
 
-Sphere::Sphere(FieldFunction f, double iso, double radius) :
-	Primitive(f, iso, radius)
+Sphere::Sphere(double iso, double radius)
 {
+	SetEquation();
 	compute_bounds();
 }
 
 double Sphere::Evaluate(const glm::dvec3& p)
 {
-	return Primitive::Evaluate(getDistance(p));
+	return Differentiated::FieldValue(p);
 }
 
 double Sphere::FieldValue(const glm::dvec3& p)
 {
-	return Primitive::FieldValue(getDistance(p));
+	return Differentiated::FieldValue(p) - m_iso;
 }
 
 glm::dvec3 Sphere::GetStartVertex()
 {
-	return project(glm::dvec3(0, 0, 0));
+	return project(m_bounds.max());
 }
 
 glm::dvec3 Sphere::GetCenterVertex()
@@ -52,11 +53,12 @@ void Sphere::compute_bounds()
 	m_bounds.compute(points);
 }
 
-
-glm::dvec3 Sphere::Normal(const glm::dvec3& point)
+void Implicit::Sphere::SetEquation()
 {
-	if (point == glm::dvec3(0, 0, 0)) return glm::dvec3(0, 1, 0);
-	return glm::normalize(point);
+	Equation = [&](const autodiff::dual& x, const autodiff::dual& y, const autodiff::dual& z) -> autodiff::dual
+	{
+		return x * x + y * y + z * z - m_radius*m_radius;
+	};
 }
 
 double Sphere::getDistance(const glm::dvec3& p)

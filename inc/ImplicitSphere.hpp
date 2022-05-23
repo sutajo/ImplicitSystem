@@ -2,14 +2,16 @@
 #define IMPLICIT_SPHERE_HPP
 
 #include "ImplicitPrimitive.hpp"
+#include "ImplicitDifferentiated.hpp"
 
 namespace Implicit
 {
 	/**
 	 * \brief primitive sphere object
 	 */
-	class Sphere : public Primitive
+	class Sphere : public Differentiated<Sphere>
 	{
+		friend class Differentiated<Sphere>;
 	public:
 		/**
 		 * \brief Create new Sphere Primitive
@@ -20,7 +22,7 @@ namespace Implicit
 		 *
 		 * \param f The FieldFunction for the Sphere
 		 */
-		Sphere(FieldFunction f);
+		Sphere();
 
 		/**
 		 * \brief Create new Sphere Primitive
@@ -30,7 +32,7 @@ namespace Implicit
 		 * \param f The FieldFunction for the Sphere
 		 * \param iso The iso value where the function is defined
 		 */
-		Sphere(FieldFunction f, double iso);
+		Sphere(double iso);
 
 		/**
 		 * \brief Create new Sphere Primitive
@@ -42,7 +44,7 @@ namespace Implicit
 		 * \param iso The iso value where the surface is defined
 		 * \param radius The radius of the object
 		 */
-		Sphere(FieldFunction f, double iso, double radius);
+		Sphere(double iso, double radius);
 
 		/**
 		 * \brief Evaluate the surface at a given point
@@ -51,14 +53,14 @@ namespace Implicit
 		 *
 		 * \param point The point to evaluate
 		 */
-		virtual double Evaluate(const glm::dvec3& point);
+		virtual double Evaluate(const glm::dvec3& point) override;
 
 		/**
 		 * \brief Evaluate the field function at a given point
 		 *
 		 * \param point The point to evaluate
 		 */
-		virtual double FieldValue(const glm::dvec3& point);
+		virtual double FieldValue(const glm::dvec3& point) override;
 
 		/**
 		 * \brief returns a vertex on the surface
@@ -69,7 +71,7 @@ namespace Implicit
 		 *
 		 * \return vertex
 		 */
-		virtual glm::dvec3 GetStartVertex();
+		virtual glm::dvec3 GetStartVertex() override;
 
 		/**
 		 * \brief returns the center vertex
@@ -77,9 +79,7 @@ namespace Implicit
 		 * This will return (0, 0, 0) for all instances of
 		 * Implicit::Primitive.
 		 */
-		virtual glm::dvec3 GetCenterVertex();
-
-		virtual glm::dvec3 Normal(const glm::dvec3& point);
+		virtual glm::dvec3 GetCenterVertex() override;
 
 	protected:
 		/**
@@ -94,7 +94,11 @@ namespace Implicit
 		 * \brief Compute the bounding box of the primitive object
 		 */
 		void compute_bounds();
+
+		EquationT Equation;
+		virtual void SetEquation() override;
 	private:
+		double m_radius = 1.0;
 	};
 };
 
